@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import ChromiumOptions
 from webdriver_manager.chrome import ChromeDriverManager
 
 piece_types = ['wp', 'wb', 'wn', 'wr', 'wq', 'wk', 'bp', 'bb', 'bn', 'br', 'bq', 'bk']
@@ -20,7 +21,9 @@ def to_int(array):
 
 
 def main():
-    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+    options = ChromiumOptions()
+    options.add_argument(r"user-data-dir=C:\Users\JC200\AppData\Local\Google\Chrome\User Data")
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get('https://www.chess.com/')
 
     color = 'b'
@@ -32,7 +35,7 @@ def main():
 
     print("started")
     board = driver.find_element(By.CLASS_NAME, 'board')
-    size = int(board.value_of_css_property('width')[:-2])
+    size = int(float(board.value_of_css_property('width')[:-2]))
     offset = size/8
 
     def move_piece(start, end):
@@ -68,7 +71,7 @@ def main():
 
     # make the moves
     engine = subprocess.Popen(
-        [r'C:\Users\Joshua\source\repos\RandomPythonProgrammer\ChessCpp\x64\Release\Chess.exe', "engine"],
+        r'C:\Users\JC200\source\repos\Chess\x64\Release\Chess.exe',
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE
     )
