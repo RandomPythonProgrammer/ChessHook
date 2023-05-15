@@ -22,7 +22,7 @@ def to_int(array):
 
 def main():
     options = ChromiumOptions()
-    options.add_argument(r"user-data-dir=C:\Users\JC200\AppData\Local\Google\Chrome\User Data")
+    options.add_argument(r"user-data-dir=%userprofile%\AppData\Local\Google\Chrome\User Data")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get('https://www.chess.com/')
 
