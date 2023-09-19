@@ -71,7 +71,7 @@ def main():
 
     # make the moves
     engine = subprocess.Popen(
-        r'C:\Users\JC200\source\repos\Chess\x64\Release\Chess.exe',
+        r'path to engine',
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE
     )
