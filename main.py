@@ -1,7 +1,10 @@
+import os
+import random
 import subprocess
 import time
 
 import keyboard
+import selenium.common
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.service import Service
@@ -22,7 +25,7 @@ def to_int(array):
 
 def main():
     options = ChromiumOptions()
-    options.add_argument(r"user-data-dir=%userprofile%\AppData\Local\Google\Chrome\User Data")
+    options.add_argument(rf"user-data-dir={os.path.join(os.getenv('userprofile'), 'AppData', 'Local', 'Google', 'Chrome', 'User Data')}")
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     driver.get('https://www.chess.com/')
 
@@ -71,7 +74,7 @@ def main():
 
     # make the moves
     engine = subprocess.Popen(
-        r'path to engine',
+        r'C:\Users\JC200\source\repos\RandomPythonProgrammer\ChessCppOld\x64\Release\chess.exe',
         stdin=subprocess.PIPE,
         stdout=subprocess.PIPE
     )
@@ -100,6 +103,20 @@ def main():
                 print(pos)
                 move_piece(*pos)
                 flag = False
+                if random.random() < 0.25:
+                    try:
+                        chatbox = driver.find_element(By.CLASS_NAME, 'chat-input-chat-wrapper').find_element(By.TAG_NAME, 'input')
+                        messages = random.choice([
+                            "hello",
+                            "nice move",
+                            "do you like my response?",
+                            "i am trying my best",
+                            "i am a chess beginner",
+                        ])
+                        chatbox.send_keys(messages + "\n")
+                    except selenium.common.NoSuchElementException:
+                        pass
+
             last_read = state
 
     engine.stdin.close()
